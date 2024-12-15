@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Auth</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="navbar">
+          <a class="navbar-logo" href="/">Home</a>
+          <div class="navbar-right">
+            <% if (!user) { %>
+            <a class="btn btn-outline-success" href="/create">Đăng ký</a>
+            <a class="btn btn-primary text-white" href="/login">Đăng nhập</a>
+            <% } else { %>
+              <a class="btn btn-primary" href="/dashboard">Quản lý blog</a>
+            <a class="btn btn-outline-danger" href="/logout">Đăng xuất</a>
+            <% } %>
+          </div>
+        </div>
+      </header>
+      <main><%- body %></main>
+      <footer>
+        <h3>Demo made by Trung Nguyen</h3>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

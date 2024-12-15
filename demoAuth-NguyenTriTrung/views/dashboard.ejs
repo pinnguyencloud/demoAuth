@@ -1,0 +1,245 @@
+<div class="dashboad-title">
+  <h2>Welcome, <%= user.fullName %>!</h2>
+  <h4>Quản lý blogs của bạn</h4>
+</div>
+<div class="dashboad-blogs-header">
+  <button
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#createBlog"
+  >
+    Thêm mới
+  </button>
+</div>
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Create At</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (blogs.length > 0) { %> <% blogs.forEach(blog => { %>
+    <tr>
+      <td><%= blog.title %></td>
+      <td><%= blog.content %></td>
+      <td><%= blog.createdAt %></td>
+      <td>
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#editBlog<%= blog._id %>"
+          class="btn btn-sm btn-warning"
+        >
+          Sửa
+        </button>
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#deleteBlog<%= blog._id %>"
+          class="btn btn-sm btn-danger"
+        >
+          Xóa
+        </button>
+      </td>
+    </tr>
+
+    <!-- Modal delete -->
+    <div
+      class="modal fade"
+      id="deleteBlog<%= blog._id %>"
+      tabindex="-1"
+      aria-labelledby="deleteBlogLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteBlogLabel">Sửa bài blog</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              action="/delete/<%= blog._id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+              id="deleteBlogForm<%= blog._id %>"
+            >
+              <p>Bạn chắc chắn xóa blog này</p>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Hủy bỏ
+            </button>
+            <button
+              type="submit"
+              form="deleteBlogForm<%= blog._id %>"
+              class="btn btn-danger"
+            >
+              Xóa blog
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal edit cho từng blog -->
+    <div
+      class="modal fade"
+      id="editBlog<%= blog._id %>"
+      tabindex="-1"
+      aria-labelledby="editBlogLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editBlogLabel">Sửa bài blog</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="editBlogForm<%= blog._id %>"
+              method="POST"
+              action="/updateBlog/<%= blog._id %>?_method=PUT"
+            >
+              <div class="row mb-3">
+                <label
+                  for="inputTitle<%= blog._id %>"
+                  class="col-sm-2 col-form-label"
+                  >Title</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    id="inputTitle<%= blog._id %>"
+                    placeholder="Nhập tiêu đề của blog của bạn tại đây"
+                    value="<%= blog.title %>"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label
+                  for="inputContent<%= blog._id %>"
+                  class="col-sm-2 col-form-label"
+                  >Content</label
+                >
+                <div class="col-sm-10">
+                  <textarea
+                    class="form-control"
+                    name="content"
+                    id="inputContent<%= blog._id %>"
+                    rows="5"
+                  >
+<%= blog.content %></textarea
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Hủy bỏ
+            </button>
+            <button
+              type="submit"
+              form="editBlogForm<%= blog._id %>"
+              class="btn btn-primary"
+            >
+              Cập nhật
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% }) %> <% } else { %>
+    <tr>
+      <td colspan="4" class="text-center">No data</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<!-- Modal create -->
+<div
+  class="modal fade"
+  id="createBlog"
+  tabindex="-1"
+  aria-labelledby="createBlogLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createBlogLabel">Thêm mới blog của bạn</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="createBlogForm" method="POST" action="/dashboard">
+          <div class="row mb-3">
+            <label for="inputTitle" class="col-sm-2 col-form-label"
+              >Title</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                name="title"
+                class="form-control"
+                id="inputTitle"
+                placeholder="Nhập tiêu đề của blog của bạn tại đây"
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="inputContent" class="col-sm-2 col-form-label"
+              >Content</label
+            >
+            <div class="col-sm-10">
+              <textarea
+                class="form-control"
+                name="content"
+                id="inputContent"
+                rows="5"
+              ></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Hủy bỏ
+        </button>
+        <button type="submit" form="createBlogForm" class="btn btn-primary">
+          Tạo bài viết
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

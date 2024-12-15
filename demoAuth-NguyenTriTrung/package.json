@@ -1,0 +1,29 @@
+{
+  "name": "authenticatorwithmongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-redis": "^7.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "ioredis": "^5.4.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.7.3",
+    "nodemon": "^3.1.7",
+    "passport": "^0.7.0",
+    "passport-local-mongoose": "^8.0.0"
+  }
+}
